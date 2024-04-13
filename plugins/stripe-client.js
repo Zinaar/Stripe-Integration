@@ -15,29 +15,22 @@ async function createPaymentIntent(amount, currency) {
         return stripe.paymentIntents.create({
             amount: calculateOrderAmount(amount),
             currency: currency,
-        }).then((res) => {
-            console.log(res);
-            return res
-        }).catch((e) => {
-            console.log(e);
-            throw e
         })
   
 }
 
-async function confirmPaymentIntent(clientId, paymentMethod, returnUrl) {
-    return stripe.paymentIntents.confirm(clientId, {payment_method: paymentMethod, return_url:returnUrl}).then((res) => {
-        console.log(res);
-        return res
-    }).catch((e) => {
-        console.log(e);
-        throw e
-    })
+async function retreivePaymentIntent(id) {
+    return stripe.paymentIntents.retrieve(id)
+}
+
+async function confirmPaymentIntent(id, paymentMethod, returnUrl) {
+    return stripe.paymentIntents.confirm(id, {payment_method: paymentMethod, return_url:returnUrl, use_stripe_sdk:true})
 }
 
 async function fastifyStripe(fastify, options) {
     fastify.decorate('stripe', stripe);
     fastify.decorate('createPaymentIntent', createPaymentIntent);
+    fastify.decorate('retreivePaymentIntent' , retreivePaymentIntent)
     fastify.decorate('confirmPaymentIntent', confirmPaymentIntent);
 }
 

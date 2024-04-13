@@ -5,6 +5,8 @@ const AutoLoad = require('@fastify/autoload')
 const fastifyStatic = require('@fastify/static');
 const fastifyEnv = require('@fastify/env');
 
+
+
 // Pass --options via CLI arguments in command to enable these options.
 const options = {}
 require('dotenv').config();
@@ -29,6 +31,10 @@ module.exports = async function (fastify, opts) {
     schema: envSchema,
     dotenv: true
 });
+
+/** 
+ * load the database
+ */
 
   // Do not touch the following lines
 

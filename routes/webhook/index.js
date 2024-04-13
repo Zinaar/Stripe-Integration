@@ -38,20 +38,33 @@ module.exports = async function (fastify, opts) {
             return;
         }
 
-        // Handle the event
+       /**
+        * Note  handle all possible events that require an action
+        */
         switch (event.type) {
             case 'payment_intent.created':
                 const paymentIntentCreated = event.data.object;
-                // Then define and call a function to handle the event payment_intent.succeeded
+               //  update db entity with payment intent id
                 break;
             case 'payment_intent.succeeded' :
-            // call omno to register transaction
+            // create payment event entry
+            // update payment entity status
             break
+            case 'payment_intent.payment_failed' :
+              // create payment event entry
+              // update payment entity status
+              break
+              case 'payment_intent.processing' :
+                // create payment event entry
+                // update payment entity status
+              break
             default:
                 console.log(`Unhandled event type ${event.type}`);
         }
 
-        // Return a 200 response to acknowledge receipt of the event
-        reply.status(200).send();
+       /**
+        * return ack to stripe api
+        */
+        reply.status(200).send({received: true});
     });
 };
