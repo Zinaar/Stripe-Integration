@@ -7,7 +7,7 @@ In the project directory, you can run:
 
 ### `npm run dev`
 
-To start the app in dev mode.\
+To start the app in dev mode
 
 Open [http://localhost:3000/static/checkout.html](http://localhost:3000/static/checkout.html) to view it in the browser. this step is optional
 
@@ -63,9 +63,9 @@ Stripe Payment Intent Events
 For handling payment intent events specifically, you'll receive notifications whenever there is an update to a payment intent, such as when it is created, requires confirmation, succeeds, fails, etc. These events allow you to keep track of the status of payment intents and take appropriate actions in your application, such as updating order status or sending confirmation emails to customers.
 
 Example Webhook Endpoint Handler
-javascript
-Copy code
 // Example webhook endpoint handler
+
+```
 fastify.post('/stripe-webhook', async (request, reply) => {
   const event = request.body;
 
@@ -91,6 +91,9 @@ fastify.post('/stripe-webhook', async (request, reply) => {
   // Send a response to acknowledge receipt of the event
   reply.status(200).send({ received: true });
 });
+
+```
+
 Securing Webhook Endpoints
 It's important to secure your webhook endpoints to prevent unauthorized access and ensure the integrity of the data received from Stripe. You can use webhook signatures to verify that the requests are coming from Stripe and haven't been tampered with.
 
@@ -108,19 +111,24 @@ amount (required, number): The amount of the payment.
 currency (required, string): The currency of the payment.
 Example Request:
 
-bash
-Copy code
+
+
+```
 curl -X POST [http://localhost:3000/create-payment-intent] \
 -H "Content-Type: application/json" \
 -d '{"amount": 1000, "currency": "USD"}'
-Example Response:
 
-json
-Copy code
+
+```
+Example Response
+
+```
 {
   "clientSecret": "pi_1Jxxx...", 
   "paymentIntentId": "pi_1Jxxx..."
 }
+```
+
 Confirm Payment Intent
 
 After receiving the payment intent details, you can confirm the payment by sending a POST request to the /confirm-payment-intent endpoint with the following data:
@@ -130,15 +138,14 @@ paymentMethod (required, string): The payment method hash.
 returnUrl (optional, string): The URL to return to after confirmation.
 Example Request:
 
-bash
-Copy code
+```
 curl -X POST [http://localhost:3000/confirm-payment-intent] \
 -H "Content-Type: application/json" \
 -d '{"id": "pi_1Jxxx...", "paymentMethod": "pm_1Jxxx...", "returnUrl": "https://example.com/return"}'
-Example Response:
+```
+Example Response
 
-json
-Copy code
+```
 {}
 Check Payment Status
 
@@ -147,19 +154,20 @@ Alternatively, you can check the status of a payment intent at any time by sendi
 id (required, string): The ID of the payment intent.
 Example Request:
 
-bash
-Copy code
+```
 curl -X GET '[http://localhost:3000/retrieve-payment-status?id=pi_1Jxxx...]'
+```
+
 Example Response:
 
-json
-Copy code
+```
 {
   "status": "succeeded",
   "amount": 10.0,
   "currency": "USD"
 }
-Explore Further
+```
+
 
 ## Learn More
 
