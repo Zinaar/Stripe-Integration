@@ -12,37 +12,41 @@ To start the app in dev mode
 Open [http://localhost:3000/static/checkout.html](http://localhost:3000/static/checkout.html) to view it in the browser. this step is optional
 
 
-### Avialable Endpoints
-1. Create Payment Intent
-Description: Create a simple payment intent, providing other data required to create client and session.
-Method: POST
-URL: /stripe/create-payment-intent
-Request Body:
-amount (required, number): The amount of the payment.
-currency (required, string): The currency of the payment.
-Response:
-clientSecret (string): The client secret of the payment intent. this could be used in your client application to handle intent confirmation
-paymentIntentId (string): The ID of the payment intent.
-2. Confirm Payment Intent
-Description: Manually confirm a payment intent. Real paymentMethod hash can be provided.
-Method: POST
-URL: /stripe/confirm-payment-intent
-Request Body:
-id (required, string): The ID of the payment intent.
-paymentMethod (required, string): The payment method hash. provide "pm-card-visa" for testing purposes
-returnUrl (optional, string): The URL to return to after confirmation.
-Response:
-Status Code: 200 OK
-3. Retrieve Payment Status
-Description: Retrieve payment intent status.
-Method: GET
-URL: /stripe/retrieve-payment-status
-Query Parameters:
-id (required, string): The ID of the payment intent.
-Response:
-status (string): The status of the payment intent.
-amount (number): The amount of the payment (in cents).
-currency (string): The currency of the payment.
+### Available Endpoints
+
+1. **Create Payment Intent**
+   - **Description**: Create a simple payment intent, providing other data required to create client and session.
+   - **Method**: POST
+   - **URL**: `/stripe/create-payment-intent`
+   - **Request Body**:
+     - `amount` (required, number): The amount of the payment.
+     - `currency` (required, string): The currency of the payment.
+   - **Response**:
+     - `clientSecret` (string): The client secret of the payment intent. This could be used in your client application to handle intent confirmation.
+     - `paymentIntentId` (string): The ID of the payment intent.
+
+2. **Confirm Payment Intent**
+   - **Description**: Manually confirm a payment intent. Real paymentMethod hash can be provided.
+   - **Method**: POST
+   - **URL**: `/stripe/confirm-payment-intent`
+   - **Request Body**:
+     - `id` (required, string): The ID of the payment intent.
+     - `paymentMethod` (required, string): The payment method hash. Provide "pm-card-visa" for testing purposes.
+     - `returnUrl` (optional, string): The URL to return to after confirmation.
+   - **Response**:
+     - Status Code: 200 OK
+
+3. **Retrieve Payment Status**
+   - **Description**: Retrieve payment intent status.
+   - **Method**: GET
+   - **URL**: `/stripe/retrieve-payment-status`
+   - **Query Parameters**:
+     - `id` (required, string): The ID of the payment intent.
+   - **Response**:
+     - `status` (string): The status of the payment intent.
+     - `amount` (number): The amount of the payment (in cents).
+     - `currency` (string): The currency of the payment.
+
 
 ### Stripe Webhooks 
 Stripe webhooks provide a way for your application to receive real-time notifications about events that occur in your Stripe account, such as payment intent updates, charges, refunds, etc. These notifications are sent as HTTP POST requests to a specified endpoint in your application.
@@ -143,10 +147,15 @@ curl -X POST [http://localhost:3000/confirm-payment-intent] \
 -H "Content-Type: application/json" \
 -d '{"id": "pi_1Jxxx...", "paymentMethod": "pm_1Jxxx...", "returnUrl": "https://example.com/return"}'
 ```
+
 Example Response
 
 ```
+
 {}
+
+```
+
 Check Payment Status
 
 Alternatively, you can check the status of a payment intent at any time by sending a GET request to the /retrieve-payment-status endpoint with the ID of the payment intent as a query parameter:
@@ -156,7 +165,9 @@ Example Request:
 
 ```
 curl -X GET '[http://localhost:3000/retrieve-payment-status?id=pi_1Jxxx...]'
+
 ```
+
 
 Example Response:
 
@@ -166,6 +177,7 @@ Example Response:
   "amount": 10.0,
   "currency": "USD"
 }
+
 ```
 
 
