@@ -1,5 +1,5 @@
-# Getting Started with [Fastify-CLI](https://www.npmjs.com/package/fastify-cli)
-This project was bootstrapped with Fastify-CLI.
+# Getting Started with Stripe integration with Fastify
+
 
 ## Available Scripts
 
@@ -67,7 +67,7 @@ Stripe Payment Intent Events
 For handling payment intent events specifically, you'll receive notifications whenever there is an update to a payment intent, such as when it is created, requires confirmation, succeeds, fails, etc. These events allow you to keep track of the status of payment intents and take appropriate actions in your application, such as updating order status or sending confirmation emails to customers.
 
 Example Webhook Endpoint Handler
-// Example webhook endpoint handler
+
 
 ```
 fastify.post('/stripe-webhook', async (request, reply) => {
